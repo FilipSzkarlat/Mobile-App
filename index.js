@@ -3,9 +3,8 @@ import {
   getDatabase,
   ref,
   push,
+  onValue,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-
-let shoppingList = document.getElementById("shopping-list");
 
 const appSettings = {
   databaseURL:
@@ -18,11 +17,33 @@ const shoppingListInDB = ref(database, "shoppingList");
 
 const inputFieldEl = document.getElementById("input-field");
 const addButtonEl = document.getElementById("add-button");
+const shoppingListEl = document.getElementById("shopping-list");
 
 addButtonEl.addEventListener("click", function () {
   let inputValue = inputFieldEl.value;
 
   push(shoppingListInDB, inputValue);
 
-  shoppingList.innerHTML += `<li>${inputValue}</li>`;
+  clearInputFieldEl();
+
+  appendItemToShoppingListEl(inputValue);
 });
+
+/*
+Challenge:
+Call the onValue function with
+shoppingListInDB as the first argument and
+function(snapshot) {} as the second argument
+*/
+onValue(shoppingListInDB, function (snapshot) {
+  let myArr = Object.values(snapshot.val());
+  console.log(myArr);
+});
+
+function clearInputFieldEl() {
+  inputFieldEl.value = "";
+}
+
+function appendItemToShoppingListEl(itemValue) {
+  shoppingListEl.innerHTML += `<li>${itemValue}</li>`;
+}
