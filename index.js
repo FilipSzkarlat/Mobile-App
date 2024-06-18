@@ -4,6 +4,7 @@ import {
   ref,
   push,
   onValue,
+  remove,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 const appSettings = {
@@ -25,25 +26,47 @@ addButtonEl.addEventListener("click", function () {
   push(shoppingListInDB, inputValue);
 
   clearInputFieldEl();
-
-  appendItemToShoppingListEl(inputValue);
 });
 
-/*
-Challenge:
-Call the onValue function with
-shoppingListInDB as the first argument and
-function(snapshot) {} as the second argument
-*/
 onValue(shoppingListInDB, function (snapshot) {
-  let myArr = Object.values(snapshot.val());
-  console.log(myArr);
+  let itemsArray = Object.entries(snapshot.val());
+
+  clearShoppingListEl();
+
+  for (let i = 0; i < itemsArray.length; i++) {
+    let currentItem = itemsArray[i];
+    // Challenge: Make two let variables:
+    // currentItemID and currentItemValue and use currentItem to set both of
+    let currentItemID = currentItem[0];
+
+    let currentItemValue = currentItem[1];
+    // them equal to the correct values.
+
+    appendItemToShoppingListEl(currentItem);
+  }
 });
+
+function clearShoppingListEl() {
+  shoppingListEl.innerHTML = "";
+}
 
 function clearInputFieldEl() {
   inputFieldEl.value = "";
 }
 
-function appendItemToShoppingListEl(itemValue) {
-  shoppingListEl.innerHTML += `<li>${itemValue}</li>`;
+function appendItemToShoppingListEl(item) {
+  let itemID = item[0];
+  let itemValue = item[1];
+
+  let newEl = document.createElement("li");
+
+  newEl.textContent = itemValue;
+
+  newEl.addEventListener("click", function () {
+    let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`);
+
+    remove(exactLocationOfItemInDB);
+  });
+
+  shoppingListEl.append(newEl);
 }
