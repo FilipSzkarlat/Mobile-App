@@ -29,20 +29,22 @@ addButtonEl.addEventListener("click", function () {
 });
 
 onValue(shoppingListInDB, function (snapshot) {
-  let itemsArray = Object.entries(snapshot.val());
+  // Challenge: Change the onValue code so that it uses snapshot.exists() to show items when there are items in the database and if there are not displays the text 'No items here... yet'.
 
-  clearShoppingListEl();
+  if (snapshot.exists()) {
+    let itemsArray = Object.entries(snapshot.val());
 
-  for (let i = 0; i < itemsArray.length; i++) {
-    let currentItem = itemsArray[i];
-    // Challenge: Make two let variables:
-    // currentItemID and currentItemValue and use currentItem to set both of
-    let currentItemID = currentItem[0];
+    clearShoppingListEl();
 
-    let currentItemValue = currentItem[1];
-    // them equal to the correct values.
+    for (let i = 0; i < itemsArray.length; i++) {
+      let currentItem = itemsArray[i];
+      let currentItemID = currentItem[0];
+      let currentItemValue = currentItem[1];
 
-    appendItemToShoppingListEl(currentItem);
+      appendItemToShoppingListEl(currentItem);
+    }
+  } else {
+    shoppingListEl.textContent = "No items here... yet";
   }
 });
 
