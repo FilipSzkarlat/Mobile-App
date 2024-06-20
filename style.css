@@ -12,7 +12,7 @@ body {
   padding: 0;
   font-family: "Rubik", sans-serif;
   background-color: #eef0f4;
-  color: #432000;
+  color: #91323f;
   user-select: none;
 }
 
@@ -26,10 +26,12 @@ body {
 img {
   width: 150px;
   margin: 0 auto;
+  border-radius: 100%;
+  mix-blend-mode: darken;
 }
 
 input {
-  color: #432000;
+  color: ;
   background-color: #dce1eb;
   border: 0;
   padding: 15px;
@@ -42,7 +44,7 @@ input {
 
 button {
   color: #fdfdfd;
-  background-color: #ac485a;
+  background-color: #2e8966;
   border: 0;
   padding: 15px;
   border-radius: 8px;
@@ -52,7 +54,7 @@ button {
 }
 
 button:hover {
-  background-color: #432000;
+  background-color: #255661;
   cursor: pointer;
 }
 
@@ -66,7 +68,7 @@ ul {
 
 ul li {
   font-size: 20px;
-  background-color: #fffdf8;
+  background-color: #e2a356;
   padding: 15px;
   border-radius: 8px;
   flex-grow: 1;
@@ -75,6 +77,7 @@ ul li {
 }
 
 ul li:hover {
-  background-color: #ffecc7;
+  background-color: #ee723f;
   cursor: pointer;
+  color: #fdfdfd;
 }
